@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		// 对象 特征-属性 行为-方法
+		// 声明对象- 键 值 若值为函数，则为方法。 Ruby：字典 
+		var ojbk = {
+			age:12,
+			name:'Kate',
+			fei:function(){
+				// 在方法中的this 指得就是这个方法中的对象	
+				var s = this.age;
+				console.log(s)
+			},
+		};
+		// 调用对象
+		ojbk.fei();
+		
+		function tf(){
+			
+		}
+		
+		// 不管在哪， this 永远指向一个对象	
+		// this 在哪里指向什么对象？
+		
+		function fun(){
+			var k = 123;
+			console.log(this.k);
+		}
+		var o1 = {
+			k:456,
+			f:fun,
+			// console.log(this.k) this is o1 , k in o1
+		}
+		
+		var o2 = {
+			k:789,
+			f:fun,
+		}
+		
+		o1.f();
+		o2.f();
+
+		// this 运行在哪个对象下,就指向哪个对象
+		// 对象内容遍历
+		var o = {
+			name:'Lulu',
+			age:15,
+			sex:'male',
+		}
+		// for...in
+		// for(键 in 对象)
+		// for in 还能循环遍历数组
+		for(var k in o){
+			console.log(o[k]);
+		}
+		
+		var arr = [2,3,4,5,6,7];
+		for(var k in arr){
+			console.log(arr[k]);
+		}
+		
+		// 实例化方式(内置构造函数）
+// 		var ojbk2 = new Object();
+// 		
+// 		// 自定义构造函数
+// 		
+// 		function newojb() {
+// 			
+// 		}
+// 		
+		// 包装对象 数值 字符串 布尔 原始值在一定条件下可以自动转化为对象
+		// 如果包装对象使用完成,会自动立即销毁
+		var a = '456';
+		console.log('a = ',a.length);
+		
+		// 默认库对象
+		// 绝对值
+		var n = -2;
+		console.log(Math.abs(n));
+		
+		// 随机数: Math.random() 随机小数/
+		// 整数随机数公式 获取 n-m 之间的随机数值
+		function intr(n,m){
+			var r = Math.random() * (m-n) + n;
+			// 整数化
+			r = Math.floor(r);
+			return r;
+		}
+		console.log(intr(1,20));
+		
+		// 实例化构造函数获取时间对象
+		var da = new Date();
+		console.log(da);
+		// 获取小时
+		// JS 获取的时间是本地时间,月份是从0开始的
+		console.log(da.getDate());
+		console.log(da.getHours());
+		console.log(da.getMonth());
+
+		// 插入数组
+		var k = 1;
+		arr.push(k);
+		console.log(arr)
+		console.log(arr.slice(2,4));
+		
+		// 字符串对象
+		var s = "Hello World";
+		// 字符第一次出现的位置
+		console.log(s.indexOf('d'));
+		// 截取片段
+		console.log(s.substr(2,5));
+		// 转换大小写
+		console.log(s.toLowerCase());
+		console.log(s.toUpperCase());
+		// 替换字符 源字符串不会改变
+		console.log(s.replace('World','China'));
+		
+
+	</script>
+</html>

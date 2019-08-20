@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// 闰年 能被4整除 但是不能被100整除或者能被400整除的年份
+			var year = 2010;
+			if(year%4 == 0){
+				if(year%100 != 0){
+					console.log("闰年")
+				}else if(year%400 == 0){
+					console.log("闰年")
+				}else{
+					console.log("平年")
+				}
+			}else{
+				console.log("平年")
+			}
+			
+			var c = 5;
+			switch(c){
+				case 1:
+					console.log("C=1")
+					break;
+				case 2:
+					console.log("C=2")
+					break;
+				default:
+					console.log("C=?")
+					break;
+			}
+			var w = 0;
+			while(w<10){
+				console.log("W=",w)
+				w+=1
+			}
+			// do while 是先执行一次代码再判断条件成立与否
+			// 因此 do while 循环至少执行一次
+			var w2 = 10;
+			do{
+				console.log("W2 =",w2)
+				w2+=1
+			}while(w2<10)
+			
+			//for(初始表达式；判断表达式；自增自减运算){}
+			for(var i=1;i<5;i++){
+				console.log("For.i = ",i)
+			}
+			// 打印正方形
+			var t = "";
+			for(var c=0;c<10;c++){
+				for(var k=0;k<10;k++){
+					t += "* "
+				}
+				t += "\n"
+			}
+			console.log(t)
+			// 打印三角形
+			var t = "";
+			for(var c=0;c<10;c++){
+				for(var k=c;k<10;k++){
+					t += "* "
+				}
+				t += "\n"
+			}
+			console.log(t)
+			// 乘法表
+			var t = "";
+			for(var x=1;x<10;x++){
+				for(var y=x;y<10;y++){
+					t += x+" * "+y+" = "+(x*y)+"\t"
+				}
+				t += "\n"
+			}
+			console.log(t)
+			// contiune break 
+			// 计算10以内 不能被7 整除的数
+			for(var i=0;i<=10;i++){
+				if(i%7==0){
+					continue;
+				}
+				console.log(i)
+			}
+			// 计算10-30 第二个 能被7 整除的数
+			var j = 1
+			for(var i=10;i<=30;i++){
+				if(i%7==0){
+					if(j==3){
+						console.log("第 "+j+" 个能被 7 整除的数为："+i)
+						break;
+					}else{
+						j++
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

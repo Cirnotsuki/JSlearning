@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#rollimg{
+				width: 1600px;
+				height: 480px;
+				position: relative;
+				overflow: hidden;
+				margin: auto
+			}
+			
+			#imgcon{
+				width: 9600px;
+				height: 480px;
+				font-size: 0;
+				left: 0;
+				transition: all 1s;
+				position: absolute;
+			}
+			
+			#imgcon img{
+				width: 1600px;
+				height: 480px;
+			}
+			
+			#leftBn, #rightBn{
+				position: absolute;
+				top: 190px;
+			}
+			
+			#leftBn{
+				left: 10px;
+			}
+			
+			#rightBn{
+				right: 10px;
+			}
+			
+			ul{
+				list-style: none;
+				position: absolute;
+				left: 600px;
+				bottom: 10px;
+			}
+			li{	
+				border: 1px solid #FF0000;
+				border-radius: 8px;
+				margin-left: 10px;
+				width: 16px;
+				height: 16px;
+				float: left;
+				background-color: rgb(255,0,0,0);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="rollimg">
+			<div id="imgcon">
+				<img src="img/1.jpg">
+				<img src="img/2.jpg">
+				<img src="img/3.jpg">
+				<img src="img/4.jpg">
+				<img src="img/5.jpg">
+				<img src="img/6.jpg">
+			</div>
+			<ul>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<img id="leftBn" src="img/left.png" alt="">
+			<img id="rightBn" src="img/right.png" alt="">
+		</div>
+		<script>
+			var leftBn,rightBn,imgcon,liList,preli;
+			var	pos = 0;
+			init()
+			function init(){
+				leftBn = document.getElementById("leftBn")
+				rightBn = document.getElementById("rightBn")
+				imgcon = document.getElementById("imgcon")
+				liList = Array.from(document.getElementsByTagName("li"))
+				leftBn.addEventListener("click",clickHandler)
+				rightBn.addEventListener("click",clickHandler)
+				for(var i=0; i<liList.length;i++){
+					liList[i].addEventListener("click",liclickHandler)
+				}
+				preli = liList[0]
+				movepos()
+
+			}
+			function liclickHandler(e) {
+				pos = liList.indexOf(this)
+				
+				movepos(pos)
+			}
+			function clickHandler(e) {
+				if(this===leftBn){
+					pos--
+				}else if(this===rightBn){
+					pos++
+				}
+				pos = movepos(pos)
+			}
+			
+			function movepos(pos=0){
+				if(pos>5){
+					pos = 0
+				}else if(pos<0){
+					pos = 5
+				}
+				imgcon.style.left=-1600*pos +"px"
+				console.log(imgcon.style.left)
+				if (preli){
+					preli.style.backgroundColor="rgba(255,0,0,0)";
+				}
+				preli = liList[pos]
+				preli.style.backgroundColor="rgba(255,0,0,150)";
+				return pos;
+			}
+		</script>
+	</body>
+</html>

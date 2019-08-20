@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#time{
+				width: 1152px;
+				height: 232px;
+				/* background-color: beige; */
+			}
+			#time img{
+				width: 124px;
+				height: 232px;
+				margin-right: 20px;
+				float: left;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="time">
+			<img id="h1" src="img/0.png" alt="">
+			<img id="h2" src="img/0.png" alt="">
+			<img src="img/dot.png" alt="">
+			<img id="m1" src="img/0.png" alt="">
+			<img id="m2" src="img/0.png" alt="">
+			<img src="img/dot.png" alt="">
+			<img id="s1" src="img/0.png" alt="">
+			<img id="s2" src="img/0.png" alt="">
+
+		</div>
+		<div id="ct">
+			
+		</div>
+		<script>
+			// 网页时钟
+			
+			var divt =document.getElementById("time")
+			var divct =document.getElementById("ct")
+			var h1 = document.getElementById("h1")
+			var h2 = document.getElementById("h2")
+			var m1 = document.getElementById("m1")
+			var m2 = document.getElementById("m2")
+			var s1 = document.getElementById("s1")
+			var s2 = document.getElementById("s2")
+
+			var id = setInterval(animation,1000) // 每隔1000毫秒执行一次animation
+			var isMouseHover = false
+			
+			divt.addEventListener("mouseover",mouseIn)
+			divt.addEventListener("mouseleave",mouseOut)
+			
+			function mouseIn(){
+				isMouseHover = true
+			}
+			function mouseOut(){
+				isMouseHover = false
+			}
+			
+			// 延迟执行函数
+			// setTimeout()
+			
+			function animation(){
+				if(isMouseHover === false){
+					var date = new Date();
+					h = fixta(date.getHours().toString().split(""))
+					m = fixta(date.getMinutes().toString().split(""))
+					s = fixta(date.getSeconds().toString().split(""))
+					
+					
+					h1.src="img/"+h[0]+".png";
+					h2.src="img/"+h[1]+".png";
+					m1.src="img/"+m[0]+".png";
+					m2.src="img/"+m[1]+".png";
+					s1.src="img/"+s[0]+".png";
+					s2.src="img/"+s[1]+".png";
+					
+					divct.innerHTML=toCtime(date)
+				}
+			}
+			function fixta(time){
+				if(time.length < 2){
+					time.unshift("0")
+				}
+				return time
+			}
+			function toCtime(date){
+				var week = ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"]
+				var year = ntoc(date.getFullYear())
+				var month = ntoc(date.getMonth())
+				var day = ntoc(date.getDate())
+				var w = week[date.getDay()]
+				var h = ntoc(date.getHours())
+				var m = ntoc(date.getMinutes())
+				var s = ntoc(date.getSeconds())
+				return year+"年 "+month+"月"+day+"日 "+" "+h+"时"+m+"分"+s+"秒  "+w
+			}
+			function ntoc(num){
+				var chr = ["零","一","二","三","四","五","六","七","八","九"]
+				var str = ""
+				var nstr = num.toString()
+				for(i in nstr){
+					if(i == 0){
+						n = Number(nstr)
+						// console.log(n)
+						if(n >= 10 && n < 20){
+							str += "十"
+							if(n == 10){break}
+						}else if(n >= 20 && n < 30){
+							str += "二十"
+							if(n == 20){break}
+						}else if(n >= 30 && n < 40){
+							str += "三十"
+							if(n == 30){break}
+						}else if(n >= 40 && n < 50){
+							str += "四十"
+							if(n == 40){break}
+						}else if(n >= 50 && n < 60){
+							str += "五十"
+							if(n == 50){break}
+						}else{ str += chr[Number(nstr[i])] }
+					}else{ str += chr[Number(nstr[i])] }
+				}
+				return str
+			}
+		</script>
+	</body>
+</html>

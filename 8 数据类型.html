@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body{
+				
+			}
+		</style>
+	</head>
+	<body id="bodic">
+		<script>
+			// Number 类型
+			var s = 10
+			var s1 = new Number(10) //Typeof => Object 构造函数创建的数值对象
+			// s1 === s => false
+			Number.MAX_INTEGER // 最大值
+			Number.MAX_INTEGER // 最小值
+			
+			var str = "Oppos Hello World"
+			str.charAt(1) //与 str[1] 等同
+			str.charCodeAt(1) // 获取字符串中指定索引位Unicode编码
+			str.concat("123")	// 合并字符串 与+号同样作用
+			str.indexOf("a")	// 查找字符串位置
+			String.fromCharCode(87) 	// 将一个Unicode编码转化为字符串
+			console.log(String.fromCharCode(87)) // 做密码表
+			
+			// String 类型
+			a1 = 0
+			for(i in str){
+				if(str[i] == "o"){
+					a1++
+				}
+			}
+			
+			var num = 0
+			var index = -1
+			// 当检索到 o 时,继续循环,并将查找起始指针定向为发现 o 的位置
+			while(str.indexOf("o",index+1)>-1){
+				index = str.indexOf("o",index+1)
+				num++
+			}
+			// 模糊查找
+			var data=[
+				{id:01,name:"计算机"},
+				{id:02,name:"战斗机"},
+				{id:03,name:"飞机"},
+				{id:04,name:"洗衣机"},
+				{id:05,name:"显示器"},
+				{id:06,name:"计时器"},
+				{id:07,name:"笔记本"},
+				{id:08,name:"草稿本"},
+				{id:09,name:"手机绳"}
+			]
+			// filter 创建一个数组 arr 并遍历原始数组data, 遍历的过程中当 function 的 return
+			// 为 true 时,将该结果返回到新数组 arr 中
+			var arr = data.filter(function(t){
+				// return t.name.indexOf("本")>-1 // 模糊查找
+				return t.name.indexOf("机")===t.name.length-1 // 精确查找
+			})
+			console.log(arr)
+			
+			str.lastIndexOf() 	// 从后向前查找
+			str.search()		// 用于正则表达式查找
+			str.replace()		// 替换字符 多用于正则表达式中的替换
+			
+			// 截取字符串
+			console.log(str.slice(3,10))
+			// 随机 rgb 
+			var col = (function(c){
+				c = "rgb("
+				for(var i=0;i<3;i++){
+					c += Math.floor(Math.random()*256)+","
+				}
+				return c
+			})()
+			col = col.slice(0,-1)
+			col += ")"
+			console.log(col)
+			
+			// 随机背景颜色
+			var bodyc = document.getElementById("bodic")
+			bodyc.style.backgroundColor = col
+			str.substr() // (开始位置，要截取的长度)
+			console.log(str.substring(10,0)) // 开始位置可以大于结束位置,逆向截取
+			// split
+			sptr = "a,b,c,d,e,f,g"
+			arr2 = sptr.split(",")
+			// 简易字符串倒序
+			var str2 = sptr.split(",").reverse().join("")
+			console.log(str2)
+			// 逆转字符串
+			function stReverse(str){
+				var str1 = ""
+				for(var i = str.length-1; i>=0; i--){
+					str1 += str[i]
+				}
+				return str1
+			}	
+			
+			// 提取信息 转化为字典
+			var url = "https://s.taobao.com/search?q=%E4%BA%8C%E6%89%8B%E6%98%BE%E7%A4%BA%E5%99%A8&imgfile=&js=1&stats_click=search_radio_all%3A1&initiative_id=staobaoz_20190819&ie=utf8"
+			console.log(getProfile(url))
+			
+			function getProfile(url){
+				var obj = {}
+				var arr = url.split("?")[1].split("&")
+				for(i in arr){
+					obj[arr[i].split("=")[0]] = arr[i].split("=")[1]
+				}
+				obj["q"] = decodeURI(obj["q"])
+				return obj
+			}
+			
+		</script>
+	</body>
+</html>
