@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			// window.document(DOM)
+			// Window : 是权限最高的对象,能找到我们要操作的所有子目标
+			var a = window.open("http://www.baidu.com","百度","width=200,height=200")
+			a.close()
+			
+			console.log(window.innerWidth,window.innerHeight) //内部尺寸
+			console.log(window.outerWidth,window.outerHeight) //外部尺寸
+			// 窗口当前的位置 只能获取 不能设置
+			console.log(window.screenTop,window.screenLeft)
+			// Location
+			// 重载页面 给PHP服务端工程师使用的
+			// location.reload()  
+			
+			location.href="#" // 跳转页面 会产生历史记录
+			// location.assign() // 跳转页面 会产生历史记录
+			// location.replace( ) // 跳转页面 不会产生历史记录
+			location.hash // 获取地址栏中,#号后面的内容
+			location.search // 获取地址栏中 ？号后面的内容
+			location.hostname 	// 获取域名
+			location.pathname 	// 获取目录
+			location.port		// 获取端口
+			location.protocol	// 获取协议
+			
+// 			history.back()		// 历史记录必须通过href 或者 assign 访问的页面跳转
+// 			history.go() // 0 刷新 1 往前跳转 -1 往后跳转
+			
+			// 设备屏幕宽高
+			console.log(screen.availWidth,screen.availHeight) //设备屏幕宽高 包含导航栏高度
+			console.log(screen.width,screen.height) //设备屏幕宽高 不包含导航栏高度
+			
+			console.log(navigator.userAgent) // 返回浏览器名称以及版本号
+			console.log(navigator.appName)
+			console.log(navigator.appVersion)
+			console.log(navigator.platform)
+
+		</script>
+	</body>
+</html>
