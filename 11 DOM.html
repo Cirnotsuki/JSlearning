@@ -4,12 +4,35 @@
 		<meta charset="utf-8">
 		<title></title>
 	</head>
-	<body>
+	<body><!-- <div>你好</div> -->
 		<div id="div0"></div>
+		<div id="div1" class="d"></div>
+		<div id="div2" class="d"></div>
 		<script>
-			var div0 = document.getElementById("div0")
-			var div1 = div0.cloneNode(false)
-			document.body.appendChild(div1)
+			// var div0 = document.getElementById("div0")
+			// var div1 = div0.cloneNode(false)
+			// document.body.appendChild(div1)
+			
+			var div = document.getElementsByTagName("div")
+			var d = document.getElementsByClassName("d")
+			console.log(d)
+			
+			// 节点
+			// nodeName 如果是标签,那么就是标签名
+			// nodeType 
+			// nodeValue 如果是注释,nodevalue就是注释的内容
+			
+// 			console.log(document.body.nodeName)
+// 			console.log(document.body.firstChild.nodeName)
+// 			console.log(document.body.nodeType)
+// 			console.log(document.body.firstChild.nodeType)
+// 			console.log(document.nodeType)
+// 			console.log(document.nodeValue)
+// 			console.log(document.body.nodeValue)
+// 			console.log(document.body.firstChild)
+// 			
+// 			document.body.innerHTML += document.body.firstChild.nodeValue
+
 		</script>
 	</body>
 </html>
