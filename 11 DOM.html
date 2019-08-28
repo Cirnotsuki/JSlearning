@@ -4,23 +4,71 @@
 		<meta charset="utf-8">
 		<title></title>
 	</head>
-	<body><!-- <div>你好</div> -->
+	<body>
+		<!-- <div>你好</div> -->
 		<div id="div0"></div>
-		<div id="div1" class="d"></div>
-		<div id="div2" class="d"></div>
+		<div id="div1" class="d">
+			<span></span>
+			<span class="abc"></span>
+			<span class="abc"></span>
+
+		</div>
+		<div id="div2" class="d">
+			<span class="abc"></span>
+			<span class="abc"></span>
+		</div>
+		<form action="#" method="get">
+			<input type="radio" name="ab" value="a">
+			<input type="radio" name="ab" value="b">
+			<input type="radio" name="ab" value="c">
+			<input type="radio" name="ab" value="d">
+			<input type="text" name="user">
+			<input type="password" name="pass">
+			<input type="submit">
+			<input type="search">
+			<input type="range">
+		</form>
+		
 		<script>
 			// var div0 = document.getElementById("div0")
 			// var div1 = div0.cloneNode(false)
 			// document.body.appendChild(div1)
 			
+			// 就算只有一个也会返回一个列表
+			
 			var div = document.getElementsByTagName("div")
 			var d = document.getElementsByClassName("d")
+			var ab = document.getElementsByName("ab")
+			
+			// 元素选择器方法获得元素
+			var abc = document.querySelectorAll("#div1 .abc")
+			console.log(abc)
+			
 			console.log(d)
+			console.log(ab)
+			
+			// nodeLIst 具有 foreach的遍历方法
+			
+			ab.forEach(function(t){
+				console.log(t)
+			})
+			
 			
 			// 节点
 			// nodeName 如果是标签,那么就是标签名
 			// nodeType 
 			// nodeValue 如果是注释,nodevalue就是注释的内容
+			// 节点中包含 换行 注释 和 元素
+			// childNodes 获取所有子节点 children 获取所有子元素 parentNode 获取父节点 parentElemet:获取父元素
+			// firstChild 获取第一个子节点
+			// firstElementChild 获取第一个子元素
+			// last-child 获取最后一个子节点
+			// lastElemetChild 获取最后一个子元素
+			// previousSibling 获取上一个兄弟节点
+			// previousElementSibling 获取上一个兄弟元素
+			// nextSibling 获取下一个兄弟节点
+			// nextElementSibling 获取下一个兄弟元素
+
 			
 // 			console.log(document.body.nodeName)
 // 			console.log(document.body.firstChild.nodeName)
