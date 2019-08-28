@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>你有一封新邮件，请到电子邮箱查收。</title>
+	</head>
+	<body>
+		<script>
+			var str = "你有一封新邮件，请到电子邮箱查收。"
+			var n = 0
+			setInterval(anime,300)
+			function anime(){
+				var s = ""
+				for(var i = n;i < n+8;i++){
+					// console.log(n)
+					if(typeof(str[i]) != "undefined"){
+						s += str[i]
+					}else{
+						s += " "
+					}
+				}
+				
+				document.title = s
+				console.log(s)
+				if(n == str.length){
+					n = 0
+				}else{
+					n++	
+				}
+				
+			}
+		</script>
+	</body>
+</html>

@@ -27,8 +27,22 @@
 				div.style.height = Math.floor(Math.random()*100)+"px"
 				div.style.float = "left"
 				console.log(div)
+				// 插入父容器
 				document.body.appendChild(div)
+				
+				//insertBefore(子元素,要插入在谁的前面) firstElementChild 插入在最前面
 			}
+			
+			// 删除节点 
+			// 1 自己删自己 remove()
+			// 2 删除子元素 removeChild()
+			
+			// 复制节点
+			// 1 元素深复制 复制元素以及当前元素的子元素: DOM 元素深复制 cloneNode(true)
+			// 2 元素浅复制 仅复制当前元素以及元素属性: DOM 元素浅复制 cloneNode(false)
+			
+			// 替换节点 	replaceChild(要替换的节点，原来的节点)
+			
 			
 			function randomRGB(){
 				var c = "rgb("
