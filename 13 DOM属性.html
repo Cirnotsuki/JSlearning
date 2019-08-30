@@ -2,33 +2,69 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>你有一封新邮件，请到电子邮箱查收。</title>
+		<title></title>
+		<style>
+			#div0 {
+				width: 100px;
+				height: 100px;
+				background-color: #FF0000;
+			}
+		</style>
 	</head>
 	<body>
+		<div id="div0" zdyTag = "tag"></div>
 		<script>
+			var div0 = document.getElementById("div0")
+			// 获取自定义标签属性
+			console.log(div0.getAttribute("zdyTag"))
+			// 设置自定义标签属性
+			div0.setAttribute("tagSecond","Second")
+			// 删除自定义标签属性
+			// div0.removeAttribute("id")
+			// document.URL 获取网址
+			// document.domain 获取域名
+			
+			// DOM 样式
+			// 取消 CSS 样式 原有的横杠,并将-后面的字母改写成大写字母
+			// 这种方法是增加行内样式的方法
+			
+			// 获取完成后的样式
+			console.log(getComputedStyle(div0).backgroundColor)
+			
+			// 兼容模式
+			var w
+			try {
+				w = getComputedStyle(div0).width // 非IE浏览器
+			}catch (e) {	//当报错后执行
+				w = div0.currentStyle.width		// IE浏览器可执行
+			}
+			console.log(w)
+			
 			var str = "你有一封新邮件，请到电子邮箱查收。"
 			var n = 0
-			setInterval(anime,300)
+			var x = str.length
+			setInterval(anime,200)
 			function anime(){
 				var s = ""
-				for(var i = n;i < n+8;i++){
+				for(var i = n;i < n+x;i++){
 					// console.log(n)
-					if(typeof(str[i]) != "undefined"){
-						s += str[i]
+					// typeof(str[i]) != "undefined"
+					if(i > str.length-1){
+						if(i==str.length) s +=" ";
+						s += str[i-str.length]
 					}else{
-						s += " "
+						s += str[i]
 					}
 				}
-				
-				document.title = s
-				console.log(s)
+
 				if(n == str.length){
-					n = 0
+					// s = str.substr(0,14)
+					n = 1
 				}else{
 					n++	
 				}
-				
-			}
+				document.title = s
+		}	
 		</script>
 	</body>
 </html>
