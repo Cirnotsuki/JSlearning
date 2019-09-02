@@ -3,17 +3,81 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+				
+			}
+			div{
+				width: 100px;
+				height: 100px;
+				border: 2px solid #FF0000;
+				padding: 5px;
+				margin: 10px;
+				background-color: coral;
+				/* overflow: scroll; */
+				position: absolute;8
+			}
+			p{
+				width: 300px;
+				height: 300px;
+			}
+		</style>
 	</head>
 	<body>
+		<div>
+			<p></p>
+		</div>
 		<script>
 			var img = new Image()
 			img.src = "img/1.jpg"
 			document.body.appendChild(img)
 			// 监测加载情况
-			img.addEventListener(loadHandler)
+			img.addEventListener("load",loadHandler)
 			
+			// Scroll 滚动条滚动事件
+			document.addEventListener("scroll",scrollHandler)
+			document.addEventListener("click",clickHandler)
+			// DOM 宽高和位置
+			div = document.querySelector("div")
+			// 如果overflow 使用了 scroll,则为 width-scrollwidth+padding宽度 scrollwidth：17px
+			console.log(div.clientWidth,div.clientHeight) //width+padding
+			console.log(div.offsetWidth,div.offsetHeight) //width=padding+border
+			// 如果使用overflow hidden 则为 div左padding+内容的最大宽度
+			console.log(div.scrollWidth,div.scrollHeight)
+
+			//HTML 标签
+			console.log(document.documentElement)
+			// 当前页面文档的宽高
+			console.log(document.documentElement.clientWidth,document.documentElement.clientHeight)
+			
+			console.log(div.clientLeft,div.clientTop) // 左边线和上边线
+			console.log(div.offsetLeft,div.offsetTop) // 如果没有使用定位,则是左边距和上边距
+			console.log(div.scrollLeft,div.scrollTop)
+			
+			
+			var range = div.getBoundingClientRect()
+			console.log(range)
+			// x 元素到页面最左边的距离
+			// y 元素到页面最上边的距离
+			// left x
+			// top y
+			// right 元素最右边边线到页面最左边的距离
+			// bottom 元素最下边边线到页面最上边的距离
+			// width 元素的宽度 width+border+padding
+			
+			function clickHandler(e){
+				div.style.left = Math.random()*(document.documentElement.clientWidth-div.offsetWidth)+"px"
+				div.style.top  = Math.random()*(document.documentElement.clientHeight-div.offsetHeight)+"px"
+			}
 			function loadHandler(e){
 				
+			}
+			
+			// 滚动条
+			function scrollHandler(e){
+				console.log(1)
 			}
 		</script>
 	</body>

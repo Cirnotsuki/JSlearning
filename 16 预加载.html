@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/Preload.js"></script>
+	</head>
+	<body>
+		<script>
+			
+			// 预加载
+// 			var arr=[]
+// 			var num=1
+// 			var img = new Image()
+// 			img.addEventListener("load",loadHandler)
+// 			img.src = "img/"+num+".jpg"
+// 			function loadHandler(){
+// 				arr.push(this)
+// 				this.removeEventListener("load",loadHandler) // 删除常驻事件,减少内存占用
+// 				num++
+// 				if(num>6){
+// 					for(var i in arr){
+// 						console.log(arr[i].src)
+// 					}
+// 					return
+// 				}
+// 				img = new Image()
+// 				img.addEventListener("load",loadHandler)
+// 				img.src = "img/"+num+".jpg"
+// 			}
+			// 装入图片地址
+			var arr = []
+			for(var i=1;i<7;i++){
+				arr.push("img/"+i+".jpg")
+			}
+			
+			// 获取图片
+			Preload.loadImage(arr,Preload.callBackFun)
+
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+// 			var prom = new Promise(
+// 				function(resolve,reject){
+// 					var img = new Image()
+// 					
+// 					img.src="img/15.jpg"
+// 					
+// 					img.onload=function(){
+// 						resolve(this)
+// 					}
+// 					img.onerror=function(){
+// 						reject("加载失败")
+// 					}
+// 				}
+// 			);
+// 			
+// 			prom.then(
+// 				function(data){
+// 					console.log(data)
+// 				
+// 				},
+// 				function(error){
+// 					console.log(error)
+// 				
+// 				}
+// 			)
+		for(var i=1;i<8;i++){
+			// 获取图片
+			var img = loadImg("./img/"+i+".jpg")
+			//document.body.appendChild(arr[i])
+		}
+// 		var img = loadImg("./img/8.jpg")
+// 			.then(function(data){
+// 				console.log(data)
+// 			})
+// 			.catch(function(error){
+// 				console.log(error)
+// 			})
+
+		function loadImg(url) {
+			return new Promise(function(resolve,reject) {
+				var img = new Image();
+				
+				img.onload=function(){
+					console.log(1)
+					resolve(img)
+				}
+				img.onerror=function(){
+					console.log(2)
+					reject("加载失败"+url)
+				}
+				
+				img.src = url
+				
+			})	
+				.then(function(data){
+					console.log(data)
+				})
+				.catch(function(error){
+					console.log(error)
+				});
+		};
+		
+		function CheckImgExists(url) {
+			var image = new Image()
+			image.src = url
+			//没有图片，则返回-1  
+			if (image.fileSize > 0 || (image.width > 0 && image.height > 0)) {  
+				return true;  
+			} else {  
+				return false;
+			}  
+		} 
+		</script>
+	</body>
+</html>
