@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			ul{
+				display: block;
+				margin: 0;
+				padding: 0;
+				width: 100px;
+				transition: all 0.1s;
+				overflow: hidden;
+			}
+			li{
+				display: block;
+				margin: 0;
+				padding: 0;
+				width: 100px;
+				/* height: 100%; */
+				background-color: orange;
+				overflow: hidden;
+				
+			}
+			li ul li{
+				background-color: lightyellow;
+			}
+			li ul li ul li{
+				background-color: lightblue;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="firstMenu">
+			<li>广东
+				<ul class="secondMenu">
+					<li>广州
+						<ul class="thirdMenu">
+							<li>天河区</li>
+							<li>越秀区</li>
+							<li>海珠区</li>
+						</ul>
+					</li>
+					<li>佛山
+						<ul class="3rdMenu">
+							<li>南海区</li>
+							<li>禅城区</li>
+						</ul>
+					</li>
+					<li>深圳
+						<ul>
+							<li>保安</li>
+							<li>罗湖</li>
+							<li>红山</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>广西
+				<ul>
+					<li>南宁
+						<ul>
+							<li>A区</li>
+							<li>B区</li>
+							<li>C区</li>
+						</ul>
+					</li>
+					<li>桂林</li>
+					<li>柳州</li>
+				</ul>
+			</li>
+			<li>湖南</li>
+			<li>湖北</li>
+			<li>河南</li>
+			<li>河北</li>
+		</ul>
+		<script type="text/javascript">
+// 			var ul = document.getElementsByTagName("ul")[0]
+// 
+// 			ul.addEventListener("click",clickHandler)
+// 			
+// 			function clickHandler(e) {
+// 				if(e.target.constructor===HTMLUListElement) return; // 如果 e.target 是 UL 则 跳出
+// 				console.log(e.target.innerText)
+// 			}
+			var uls = document.getElementsByTagName("ul")
+			console.log(uls)
+			for(var i=uls.length-1;i>0;i--){
+				// 初始化所有父类菜单的高度
+				if (i>0){
+					uls[i].bfh = uls[i].clientHeight
+					uls[i].style.height = "0px"
+				}
+			}
+			
+			var lis = document.getElementsByTagName("li")
+			for(var i=0;i < lis.length;i++){
+				lis[i].addEventListener("click",clickHandler)
+			}
+			
+			
+			
+			function clickHandler(e){
+				e.stopPropagation() //阻止冒泡
+				this.bool = !this.bool //切换布尔值 默认没有bool这个值,this.bool返回undefined,!undefined返回true
+				// 阻止报错
+				console.log(this.bool)
+				try {
+					if(this.bool == false){
+						// 保存折叠前的菜单高度
+						this.firstElementChild.bfh = this.firstElementChild.clientHeight
+						// 将当前子菜单高度设置为0
+						this.firstElementChild.style.height = "0px"
+						// 如果上级菜单不是1级菜单
+						if(this.parentNode.className != "firstMenu"){
+							// 将上级菜单的高度减去子菜单的原始高度
+							this.parentNode.style.height = (this.parentNode.clientHeight-this.firstElementChild.bfh)+"px"
+						}
+					}else{
+						// 将菜单恢复为原始高度
+						this.firstElementChild.style.height = this.firstElementChild.bfh+"px"
+						// 如果上级菜单不是1级菜单
+						if(this.parentNode.className != "firstMenu"){
+							// 将上级菜单的高度加上子菜单的原始高度
+							this.parentNode.style.height = (this.parentNode.clientHeight+this.firstElementChild.bfh)+"px"
+						}
+					}					
+				}catch{
+					
+				}
+			}
+			
+			// function sumMenuHeight(){
+			// 	var 1stMenus = document.getElementsByClassName("stMenu")
+			// }
+		</script>
+	</body>
+</html>
