@@ -1,4 +1,5 @@
 // 预加载对象方法，将function保存在一个对象里。
+console.log("initPreload")
 var Preload = {
 	loadImage : function (arr,callback){
 		// 创建函数

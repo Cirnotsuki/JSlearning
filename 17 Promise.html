@@ -43,17 +43,15 @@
 // 			.catch(function(error){
 // 				console.log(error)
 // 			})
-
+		
 		function loadImg(url) {
 			return new Promise(function(resolve,reject) {
 				var img = new Image();
 				
 				img.onload=function(){
-					console.log(1)
 					resolve(img)
 				}
 				img.onerror=function(){
-					console.log(2)
 					reject("加载失败"+url)
 				}
 				
