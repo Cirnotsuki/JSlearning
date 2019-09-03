@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/randomStyle.js"></script>
+		<style type="text/css">
+			div{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<script>
+			var div = document.querySelectorAll("div")
+			for(var i=0;i<div.length;i++){
+				div[i].style.backgroundColor = randomStyle.bgc()
+				div[i].style.left = randomStyle.pos(500,1500)
+				div[i].style.top = randomStyle.pos(0,400)
+				drag(div[i])
+			}
+			// 拖拽第三版
+			function drag(elem){
+				elem.addEventListener("mousedown",mouseHandler)
+			}
+			function removedrag(elem){
+				elem.removeEventListener("mousedown",mouseHandler)
+			}
+			function mouseHandler(e){
+				switch (e.type){
+					case "mousedown":
+						e.preventDefault()
+						document.addEventListener("mousemove",mouseHandler)
+						document.elem = this
+						this.addEventListener("mousemove",mouseHandler)
+						this.x = e.offsetX
+						this.y = e.offsetY
+						break
+					case "mousemove":
+						try {
+							this.addEventListener("mouseup",mouseHandler)
+							this.elem.style.left = e.clientX-this.elem.x+"px"
+							this.elem.style.top = e.clientY-this.elem.y+"px"							
+						}catch{
+							
+						}
+						break
+					case "mouseup":
+						document.removeEventListener("mousemove",mouseHandler)
+						this.removeEventListener("mousemove",mouseHandler)
+						removedrag(this)
+				}
+			}
+			// 拖拽第二版
+			// function mouseDownHandler(e){
+			// 	document.addEventListener("mousemove",mouseMoveHandler)
+			// 	this.addEventListener("mouseup",mouseUpHandler)
+			// 	document.x = e.offsetX
+			// 	document.y = e.offsetY
+			// 	document.elem = this
+			// }
+			// function mouseMoveHandler(e){
+			// 	document.elem.style.left = e.clientX-this.x+"px"
+			// 	document.elem.style.top = e.clientY-this.y+"px"
+			// }
+			// function mouseUpHandler(e){
+			// 	document.removeEventListener("mousemove",mouseMoveHandler)
+			// }
+			//拖拽第一版
+			// div.onmousedown=function(evt){
+			// 	var x = evt.offsetX
+			// 	var y = evt.offsetY
+			// 	document.onmousemove=function(e){
+			// 		div.style.left = e.clientX-x+"px"
+			// 		div.style.top = e.clientY-y+"px"
+			// 	}
+			// 	div.onmouseup=function(e){
+			// 		document.onmousemove=null
+			// 	}
+			// }
+		</script>
+	</body>
+</html>

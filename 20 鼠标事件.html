@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				width: 200px;
+				height: 200px;
+				position: absolute;
+				background-color: #FFFFE0;
+				margin: auto;
+				left: 0px;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+			}
+			div div{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				background-color: #ADD8E6;
+				margin: auto;
+				left: 0px;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div>
+				
+			</div>
+		</div>
+		<form action="http://www.163.com" method="get">
+			<input type="text" name="user" />
+			<input type="submit">
+		</form>
+		<script type="text/javascript">
+			// e.preventDefault 阻止系统默认事件 阻止提交表单 阻止呼出菜单 阻止图片拖动时的禁用效果
+			// e.offsetX e.offsetY 是鼠标距离侦听目标的左上角位置
+			// var bn= document.querySelector("[type=submit]")
+			// bn.addEventListener("click",clickHandler)
+			// function clickHandler(e){
+			// 	console.log(e)
+			// 	e.preventDefaul() //阻止默认事件 IE8 及以下 e.returnValue = false
+			// }
+			var div= document.querySelector("div")
+			div.addEventListener("click",clickHandler)		// 点击(鼠标左键)
+			div.addEventListener("dblclick",clickHandler) 	// 双击
+			// div.addEventListener("mousemove",moveHandler) 	// 鼠标移动
+			div.addEventListener("mouseover",clickHandler) 	// 鼠标经过	针对e.target 目标改变就会触发
+			div.addEventListener("mouseout",clickHandler) 	// 鼠标滑出	针对e.currentTarget 针对侦听的对象
+			div.addEventListener("mouseenter",clickHandler)	// 鼠标进入
+			div.addEventListener("mouseleave",clickHandler)	// 鼠标离开
+			div.addEventListener("mousedown",clickHandler) 	// 按下鼠标
+			div.addEventListener("mouseup",clickHandler)	// 释放鼠标
+			div.addEventListener("contextmenu",clickHandler)// 鼠标右键
+			function clickHandler(e){
+				console.log(e.type)
+				e.preventDefault() // 阻止系统默认事件
+			}
+			
+			// div 跟随鼠标
+			function moveHandler(e){
+				console.log(e)
+				div.style.left = e.clientX-50+"px"
+				div.style.top = e.clientY-50+"px"
+			}
+			
+		</script>
+	</body>
+</html>
