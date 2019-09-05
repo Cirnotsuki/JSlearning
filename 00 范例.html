@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>输入您的年龄然后点击这个按钮：</p>
+
+<input id="age" value="18" />
+
+<button onclick="myFunction()">试一试</button>
+
+<p id="demo"></p>
+
+<script>
+// 多元条件运算符
+function myFunction() {
+  var age, voteable;
+  age = document.getElementById("age").value;
+  voteable = (age < 18) ? "好年轻":"够成熟";
+  document.getElementById("demo").innerHTML = voteable;
+}
+</script>
+
+</body>
+</html>

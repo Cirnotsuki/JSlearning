@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/elemental.js"></script>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			div{
+				width: 50px;
+				height: 50px;
+				position: absolute;
+			}
+			#trigger{
+				background-color: #ADD8E6;
+				text-align: center;
+				cursor:move;
+			}
+			.box{
+				transition: all 0.2s;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="trigger">撞针</div>
+	</body>
+	<script>
+		init()
+		var trigger,boxes,trionmove,timer;
+		function init(){
+			// 创建盒子
+			creatBox(50,100,100)
+			// 初始化函数
+			// 撞针
+			trigger = document.getElementById("trigger")
+			// 盒子
+			boxes = document.querySelectorAll("div")
+			// 盒子随机化
+			for(i=0;i<boxes.length;i++){
+				if(boxes[i].id != "trigger"){
+					// boxes[i].style.width = Elemental.randomPos(50,200)
+					// boxes[i].style.height = Elemental.randomPos(50,200)
+					boxes[i].style.backgroundColor = Elemental.randomBgc()
+					boxes[i].style.left = Elemental.randomPos(0,document.documentElement.clientWidth-boxes[i].offsetWidth)
+					boxes[i].style.top = Elemental.randomPos(0,document.documentElement.clientHeight-boxes[i].offsetHeight)
+					boxes[i].ox = boxes[i].offsetLeft
+					boxes[i].oy = boxes[i].offsetTop
+					boxes[i].onmove = false
+				// if(boxes[i].id != "trigger"){
+				// 	boxes[i].id = "box"+0+i
+				}
+			}
+			trigger.style.lineHeight = trigger.offsetHeight + "px"
+			// 将撞针设为可拖动
+			Elemental.drag(trigger,false)
+			// 建立循环事件
+			setInterval(collisionDetector,1)			
+		}
+		function collisionDetector(){
+			var trig;
+			// 盒子移动监视器
+			for(var i=0;i<boxes.length;i++){
+				if (moveDetector(boxes[i]).onmove) {
+					trig = boxes[i]
+				}
+			}
+			
+			for(var i=0;i<boxes.length;i++){
+				// 盒子碰撞监视器
+				if(collisionCalculator(trig,boxes[i])[0]==true && trig!=boxes[i]){
+					trig.timer = 0
+					boxes[i].timer = 0
+					boxes[i].onhit = true
+					boxes[i].bounce = false 
+					//clearMove(trig)
+					startCollision(trig,boxes[i],collisionCalculator(trig,boxes[i])[1],collisionCalculator(trig,boxes[i])[2])
+					// fixTpos(trigger,boxes[i])
+				}
+				// if (boxes[i].onhit == true) {
+				// 	// 动能碰撞
+				// 	keepMove(trig,boxes[i])
+				// }
+			}
+			//}	
+		}
+		function keepMove(t={},r={}){
+			// 边缘反弹(没写好)
+			if(r.timer<t.moveTime){
+				if(r.offsetLeft<0 || r.offsetLeft+r.offsetWidth>document.documentElement.clientWidth) r.bounce = true;
+				if(r.bounce){
+					r.style.left = r.offsetLeft - Math.floor((t.offsetLeft-t.startx)/t.moveTime*2)+"px"
+					r.style.top = r.offsetTop - Math.floor((t.starty-t.offsetTop)/t.moveTime*2)+"px"
+					if(r.offsetLeft<0 || r.offsetLeft+r.offsetWidth>document.documentElement.clientWidth) r.bounce = false;
+				}else{
+					r.style.left = r.offsetLeft + Math.floor((t.offsetLeft-t.startx)/t.moveTime*2)+"px"
+					r.style.top = r.offsetTop + Math.floor((t.starty-t.offsetTop)/t.moveTime*2)+"px"
+				}
+				//
+				r.timer += 5
+			}else{
+				r.onhit = false
+			}
+		}
+		function moveDetector(obj){
+			d = new Date()
+			if (obj.offsetLeft == obj.nx && obj.offsetTop == obj.ny && obj.afterMove == true){
+				// 载入原始坐标
+				obj.startx = obj.ox
+				obj.starty = obj.oy
+				// 载入运动时间
+				obj.moveTime = d.getTime() - obj.startTime
+				// 重设初始坐标
+				obj.ox = obj.offsetLeft
+				obj.oy = obj.offsetTop
+				// 重设计时器
+				obj.onmove = false
+				// 判断是否移动后,设为否,让停止信息仅显示一次
+				obj.afterMove = false
+				return obj
+				// return [obj.moveTime,obj.startx,obj.starty]
+			}else if(obj.offsetLeft!=obj.ox || obj.offsetTop!=obj.oy){
+				obj.nx = obj.offsetLeft
+				obj.ny = obj.offsetTop
+				if(obj.onmove == false){
+					obj.startTime = d.getTime()
+				}
+				// 移动了目标,开启是否停止移动了的检测
+				obj.afterMove = true
+				obj.onmove = true
+				return obj
+			}
+			return obj
+		}
+		// 侦测是否发生了碰撞
+		function collisionCalculator(t={},r={}){
+			t.rect = {x:t.offsetLeft, y:t.offsetTop, r:t.offsetLeft+t.offsetWidth, b:t.offsetTop+t.offsetHeight}
+			r.rect = {x:r.offsetLeft, y:r.offsetTop, r:r.offsetLeft+r.offsetWidth, b:r.offsetTop+r.offsetHeight}
+			// 左上角碰撞
+			if((t.rect.r>=r.rect.x && t.rect.b>=r.rect.y) && (t.rect.r<=r.rect.r && t.rect.b<=r.rect.b) && t.rect.x<=r.rect.x){
+				// 返回碰撞与嵌入量
+				return [true,t.rect.r-r.rect.x,t.rect.b-r.rect.y]
+			// 左下角碰撞
+			}else if((t.rect.r>=r.rect.x && t.rect.y>=r.rect.y) && (t.rect.r<=r.rect.r && t.rect.y<=r.rect.b) && t.rect.b>=r.rect.b){
+				return [true,t.rect.r-r.rect.x,t.rect.y-r.rect.b]
+			// 右上角碰撞
+			}else if((t.rect.x>=r.rect.x && t.rect.b>=r.rect.y) && (t.rect.x<=r.rect.r && t.rect.b<=r.rect.b) && t.rect.y<=r.rect.y){
+				return [true,t.rect.x-r.rect.r,t.rect.b-r.rect.y]
+			// 右下角碰撞
+			}else if((t.rect.x>=r.rect.x && t.rect.y>=r.rect.y) && (t.rect.x<=r.rect.r && t.rect.y<=r.rect.b) && t.rect.r>=r.rect.r){
+				return [true,t.rect.x-r.rect.r,t.rect.y-r.rect.b]
+			// 上边碰撞
+			}else if((r.rect.x>=t.rect.x && r.rect.r<=t.rect.r && r.rect.y>t.rect.y) && r.rect.y<=t.rect.b && r.rect.b>t.rect.b){
+				return [true,0,t.rect.b-r.rect.y]
+			// 底边碰撞
+			}else if((r.rect.x>=t.rect.x && r.rect.r<=t.rect.r) && (r.rect.y<t.rect.y && r.rect.b>=t.rect.y && r.rect.b<t.rect.b)){
+				return [true,0,t.rect.y-r.rect.b]
+			// 左边碰撞
+			}else if((r.rect.y>=t.rect.y && r.rect.b<=t.rect.b) && (t.rect.x<r.rect.x && r.rect.x<=t.rect.r && t.rect.r<r.rect.r)){
+				return [true,t.rect.r-r.rect.x,0]
+			// 右边碰撞	
+			}else if((r.rect.y>=t.rect.y && r.rect.b<=t.rect.b) && (r.rect.x<t.rect.x && r.rect.r>=t.rect.x && r.rect.r<t.rect.r)){
+				return [true,t.rect.x-r.rect.r,0]
+			}else{
+				return [false]
+			}	
+		}	
+		// 执行碰撞效果
+		function startCollision(t,r,w,h){
+			// t:Trigger 碰撞者 r:Receptor 被碰撞者 w:Width 横移距离 h:Height 纵移距离
+			// 设置反弹距离
+			var rw,rh;
+			// 计算中点向量角度
+			var tanCangle = Math.abs(((r.offsetTop+r.offsetHeight/2)-(t.offsetTop+t.offsetHeight/2))/((r.offsetLeft+r.offsetWidth/2)-(t.offsetLeft+t.offsetWidth/2)))
+			// 计算原点向量角度
+			var tanMangle = Math.abs((t.offsetTop-t.starty)/(t.offsetLeft-t.startx))
+			// 	进行元素的嵌入量偏移
+			//	碰撞角度小于三十度时进行横向偏移
+			if(tanCangle>=0 && tanCangle<1){
+				r.style.left = (w < 0) ? Math.max(r.offsetLeft+w,0)+"px":Math.min(r.offsetLeft+w,document.documentElement.clientWidth-r.clientWidth)+"px";
+			// 碰撞角度在三十度到六十度之间时进行斜方向偏移
+			}else if(tanCangle==1){
+				r.style.left = (w < 0) ? Math.max(r.offsetLeft+w,0)+"px":Math.min(r.offsetLeft+w,document.documentElement.clientWidth-r.clientWidth)+"px";
+				r.style.top = (h < 0) ? Math.max(r.offsetTop+h,0)+"px":Math.min(r.offsetTop+h,document.documentElement.clientHeight-r.clientHeight)+"px";
+			// 碰撞角度大于六十度时进行纵向偏移
+			}else if(tanCangle>1){
+				r.style.top = (h < 0) ? Math.max(r.offsetTop+h,0)+"px":Math.min(r.offsetTop+h,document.documentElement.clientHeight-r.clientHeight)+"px";
+			}
+			// 边缘反弹
+			if(r.offsetLeft<=0){
+				r.style.left = r.offsetLeft+r.offsetWidth/2+"px"
+			}else if(r.offsetLeft+r.offsetWidth>=document.documentElement.clientWidth){
+				r.style.left = r.offsetLeft-r.offsetWidth/2+"px"
+			}else if(r.offsetTop<=0){
+				r.style.top = r.offsetTop+r.offsetHeight/2+"px"
+			}else if(r.offsetTop+r.offsetHeight>=document.documentElement.clientHeight){
+				r.style.top = r.offsetTop-r.offsetHeight/2+"px"
+			}
+		}
+		// 修正撞子坐标
+		function fixTpos(t,r){
+			if(r.rect.x<=0){
+				if(t.rect.x<r.rect.r){
+					clearMove(t)
+					t.style.left=r.rect.r+"px"
+				} 				
+			}
+		}
+		function clearMove(t){
+			document.removeEventListener("mousemove",t.func.mouseHandler)
+			t.removeEventListener("mousemove",t.func.mouseHandler)
+		}
+		// 相交检测
+		function interRectJudge(tx1,ty1,tx2,ty2,rx1,ry1,rx2,ry2){
+			var ab = [rx1-tx1,ry1-ty1]
+			var ac = [rx2-tx1,ry2-ty1]
+			var ad = [tx2-tx1,ty2-ty1]
+			// 检测向量ab和向量ac是否在向量ad两边
+			var r1 = (ab[0]*ad[1]-ad[0]*ab[1])*(ac[0]*ad[1]-ad[0]*ac[1]) < 0
+			
+			var ba = [tx1-rx1,ty1-ry1]
+			var bd = [tx2-rx1,ty2-ry1]
+			var bc = [rx2-rx1,ty2-ry1]
+			// 检测向量吧和向量bd是否在向量bc两边
+			var r2 = (ba[0]*bc[1]-bc[0]*ba[1])*(bd[0]*bc[1]-bc[0]*bd[1]) < 0
+			return r1&&r2
+		}
+		function creatBox(n=1,w=100,h=100,c=""){
+			for(var i=0;i<n;i++){
+				var div = document.createElement("div")
+				div.className = c
+				div.style.width = w+"px"
+				div.style.height = h+"px"
+				div.style.position = "absolute"
+				// 插入父容器
+				document.body.insertBefore(div,document.body.firstElementChild)
+				//insertBefore(子元素,要插入在谁的前面) firstElementChild 插入在最前面
+			}
+		}
+		function consoleExist(o){
+			if (typeof (o) != "undefined") {
+				return console.log(o)
+			}
+		}	
+	</script>
+</html>
