@@ -17,6 +17,7 @@
 			#trigger{
 				background-color: #ADD8E6;
 				text-align: center;
+				display: none;
 				cursor:move;
 			}
 			.box{
@@ -26,13 +27,21 @@
 	</head>
 	<body>
 		<div id="trigger">撞针</div>
+		<form action="#" id="form">
+			<input type="number">
+			<input type="submit" value="提交">
+		</form>
 	</body>
 	<script>
+		var trigger,boxes,trionmove,timer,form;
 		init()
-		var trigger,boxes,trionmove,timer;
 		function init(){
+			form = document.getElementById("form")
+			form.addEventListener("submit",submitHandler)
+		}
+		function main(n){
 			// 创建盒子
-			creatBox(50,100,100)
+			creatBox(n,100,100)
 			// 初始化函数
 			// 撞针
 			trigger = document.getElementById("trigger")
@@ -243,6 +252,12 @@
 			if (typeof (o) != "undefined") {
 				return console.log(o)
 			}
+		}
+		function submitHandler(e){
+			main(this.firstElementChild.valueAsNumber)
+			this.style.display = "none"
+			document.getElementById("trigger").style.display = "block"
+			this.removeEventListener("submit",submitHandler)
 		}	
 	</script>
 </html>
