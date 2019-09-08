@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			button{
+				width: 120px;
+				height: 30px;
+				background-color: transparent;
+				border: 1px solid #000000;
+				box-shadow: 1px 1px 1px #CCCCCC;
+				position: absolute;
+				left: 5px;
+				top: 5px;
+			}
+			button span:first-child{
+				font-size: 16px;
+				margin-right: 15px;
+			}
+			button:hover{
+				cursor: pointer;
+				background-color:  #FFFFE0;
+			}
+			#triangle{
+				display: inline-block;
+				height: 0px;
+				border-top: 10px solid #000000;
+				border-left: 8px solid transparent;
+				border-right: 8px solid transparent;
+				position: absolute;
+				top: 10px;
+				right: 5px;
+				
+			}
+			ul{
+				width: 118px;
+				list-style: none;
+				border: #000000 solid 1px;
+				position: absolute;
+				left: 5px;
+				top: 34px;
+				display: none;
+			}
+			li{
+				display: block;
+				text-align: center;
+				background-color: white;
+				line-height: 25px;
+				cursor: pointer;
+				border-bottom: 1px solid #000000;
+			}
+			li:hover{
+				background-color:  #FFFFE0;	
+			}
+			li:last-of-type{
+				border-bottom: 0px solid #000000;
+			}
+			/* #triangle:after{
+				content: "";
+				font-size: 0;
+				/* display: inline-block; */
+				position: absolute;
+				left: 20px;
+				border-left: 10px solid #FF00FF;
+				border-top: 10px solid #0000FF;
+				border-bottom: 10px solid #FF0000;
+			} */
+		</style>
+	</head>
+	<body>
+		<div id="dropMenu">
+			<button><span>请选则城市</span><span id="triangle"></span></button>
+			<ul></ul>
+		</div>
+		<script type="text/javascript">
+			var button,city,ul,div
+			init()
+			function init(){
+				city = ["北京","上海","广州","深圳","武汉","贵州"]
+				button = document.querySelector("button")
+				button.addEventListener("click",clickHandler,true)
+				button.bool = false
+				
+				ul = document.querySelector("ul")
+				for(var i=0;i<city.length;i++){
+					var li = document.createElement("li")
+					li.innerHTML = city[i]
+					ul.appendChild(li)
+				}
+				ul.addEventListener("click",clickHandler)
+				
+				div = document.getElementById("dropMenu")
+				
+				div.addEventListener("mouseleave",clickHandler)
+				
+			}
+			
+			function clickHandler(e){
+				switch(this.tagName){
+					case "BUTTON":
+						if (!this.bool){
+							this.bool = true
+							this.nextElementSibling.style.display = "block"
+						}else if(this.bool){
+							this.bool = false
+							this.nextElementSibling.style.display = "none"
+						}
+						break
+					case "UL":
+						if(e.target.tagName == "LI"){
+							button.firstElementChild.innerHTML = e.target.innerHTML
+							button.bool = false
+							this.style.display = "none"
+						}
+						break
+					case "DIV":
+						button.bool = false
+						this.lastElementChild.style.display = "none"
+				}
+				
+			}
+			
+		</script>
+	</body>
+</html>
+	

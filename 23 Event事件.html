@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			img{
+				font-size: 100px;
+			}
+			#img{
+				width: 7rem;
+				height: 4rem;
+				display: block;
+			}
+			#text{
+				color: #CCCCCC;
+			}
+		</style>
+	</head>
+	<body><!-- 未写入：select事件 -->
+		<form action="..\recieve.html" method="get" id="form">
+			<input type="checkbox" id="inputs">
+			<input type="text" value="请输入姓名" id="text">
+			<input type="date">
+			<input type="button">
+			<input type="submit" >
+			<input type="reset">
+			<select id="select">
+				<option>北京</option>
+				<option>天津</option>
+				<option>上海</option>
+				<option>南京</option>
+			</select>
+		</from>
+		<img src="img/2.jpg" id="img">
+		<script type="text/javascript">
+			resizeHandler()
+			var form = document.getElementById("form")
+			form.addEventListener("submit",formHandler)
+			var img = document.getElementById("img")
+			function formHandler(e){
+				e.preventDefault()
+				console.log("aaaa")
+			}
+			
+			window.addEventListener("resize",resizeHandler)
+			function resizeHandler(e){
+				var s = document.documentElement.clientWidth/window.screen.width
+				document.documentElement.style.fontSize = 100*s+"px"
+				
+			}
+			
+			var select = document.getElementById("select")
+			select.addEventListener("change",changeHandler)
+			function changeHandler(e){
+				console.log(select.selectedIndex)
+				console.log(select.selectedOptions[0].textContent)
+			}
+			
+			// 聚焦focus 失焦blur
+			var text = document.getElementById("text")
+			text.addEventListener("focus",focusHandler)
+			text.addEventListener("blur",focusHandler)
+			function focusHandler(e){
+				if(e.type==="focus"){
+					if(this.value==="请输入姓名"){
+						this.style.color="#000000"
+						this.value=""
+					}
+				}else if(e.type==="blur"){
+					// str.trim() 去掉字符串的前后空格
+					if(this.value.trim().length === 0){
+						this.value="请输入姓名"
+						this.style.color="#CCCCCC"
+					}
+				}
+			}
+			
+			// 按键事件
+			document.addEventListener("keydown",keyHandler)
+			document.addEventListener("keyup",keyHandler)
+			
+			function keyHandler(e){
+				// e.code 当前按下的键 key+键名
+				// e.key 当前按下的键
+				// e.keyCode 健码值
+				console.log(e.keyCode)
+			}
+			
+			// 滚轮事件 火狐和谷歌浏览器的滚轮值不一样
+			document.addEventListener("DOMMouseScroll",mouseScrollHandler) // 火狐
+			document.addEventListener("mousewheel",mouseScrollHandler) // 谷歌火狐
+			function mouseScrollHandler(e){
+				console.log(e)
+			}
+		</script>
+	</body>
+</html>
