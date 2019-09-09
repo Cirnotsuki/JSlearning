@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" id="text">
+		<span></span>
+		<script type="text/javascript">
+			// 构造函数法
+			var reg1 = new RegExp("a","g")
+			// 字面量写法
+			var reg2 = /a/g
+			// test方法
+			var reg=/a/g
+			// exec 返回一个数组,包括正则表达式在字符串中符合条件的位置
+			console.log(reg.exec("ate an apple"))
+			// 字符串方法
+			// search 	搜索 返回下标
+			// match	搜索查找 返回数组
+			// replace	替换	返回被替换的新字符串
+			// split	分割	返回被切割的数组
+			var str = "ateanapple"
+			console.log("search:",str.search(reg))
+			console.log("match:",str.match(reg))
+			console.log("replace:",str.replace(reg,"A"))
+			console.log("split:",str.split(reg))
+			
+			// 元字符
+			// 组成正则表达式最基础的内容我们称之为元字符
+			// 修饰符 i执行大小写不敏感的匹配 g执行全局匹配 m执行多行匹配
+			// 通配符 . 
+			var str = "cat cot cet"
+			console.log("通配符",str.match(/c.t/g))
+			
+			// 字符类
+			// [] 之间的是多个字符匹配,中括号中的字符仅可以选择一个字符
+			// 匹配 cat cet
+			console.log("字符类",str.match(/c[ae]t/g))
+			// 在中括号[]之中 . 仅代表字符串,不是通配符
+			// 字符范围可以用[a-z] 和 [A-Z] 数字范围用[0-9]
+			
+			// 反义和转义
+			// 反义 ^ ,表示不是这些字符串
+			// 如果 ^ 不在中括号的最前面,那么 ^ 只代表它本身
+			// \w = [a-zA-z_0-9]
+			// \W = [^a-zA-z_0-9]
+			// \d = [0-9]
+			// \D = [^0-9]
+			// \s : 查找空白字符
+			// \S : 查找非空白字符
+			console.log("查找空白字符：",str.match(/\s/g))
+			
+			var regt = /[^0-9]\-/g
+			
+			// 阻止输入数字以外的字符
+			var text = document.getElementById("text")
+			text.addEventListener("input",inputHandler)
+			// text.addEventListener("blur",inputHandler)
+			
+			// 函数节流：在一定时间内进行一次函数判断而不是每次都进行判断,减少过快的调用进行节流
+			var id
+			function inputHandler(e){
+				if(id) return
+				id = setTimeout(function(){
+					clearTimeout(id)
+					id = 0
+					text.value=text.value.replace(/^\-\D/,"")
+					if(/\d\d\d\d-\d\d-\d\d/g.test(text.value)){
+						text.nextElementSibling.textContent = "输入正确"
+						text.nextElementSibling.style.color = "green"
+						return
+					}
+					text.nextElementSibling.textContent = "输入错误"
+					text.nextElementSibling.style.color = "red"
+				},1000)
+			}
+		</script>
+	</body>
+</html>
