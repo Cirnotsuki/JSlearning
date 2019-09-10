@@ -3,9 +3,25 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<style type="text/css">
+			input{
+				display: block;
+			}
+			/* #mail{
+				float: none;
+			}
+			span{
+				display: block;
+				float: left;
+			} */
+		</style>
 	</head>
 	<body>
 		<input type="text" id="text">
+		<span></span>
+		<input type="text" id="mail">
+		<span></span>
+		<input type="text" id="pw">
 		<span></span>
 		<script type="text/javascript">
 			// 构造函数法
@@ -51,30 +67,76 @@
 			// \s : 查找空白字符
 			// \S : 查找非空白字符
 			console.log("查找空白字符：",str.match(/\s/g))
+			// 分组隐藏
+			// 使用括号()进行分组 $1 表示第一个分组
+			console.log("13211109871".replace(/(\d{3})(\d{4})(\d{4})/,"$1****$3"))
+			// ?= 紧跟其后的是
+			// ?! 紧跟其后不是
+			console.log("紧跟其后是p：","Appleissugar".match(/[aA](?=p)/g))
+			console.log("紧跟其后不是p：","Appleissugar".match(/[aA](?!p)/g))
 			
 			var regt = /[^0-9]\-/g
 			
 			// 阻止输入数字以外的字符
 			var text = document.getElementById("text")
+			var mail = document.getElementById("mail")
+			var pw = document.getElementById("pw")
 			text.addEventListener("input",inputHandler)
+			mail.addEventListener("input",inputHandler)
+			pw.addEventListener("input",pwHandler)
 			// text.addEventListener("blur",inputHandler)
+			// 匹配汉字:\u9fd5-\u4e00
+			// 密码等级 纯数字或纯字母 低级,数字+字母 中级,数字 字母 下划线符号空格 高级
+			function pwHandler(e){
+				if(this.value.length>16){
+					this.nextElementSibling.textContent = "密码太长"
+					this.nextElementSibling.style.color = "red"
+					return
+				}
+				console.log(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,16}$/.test(this.value))
+				if(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,16}$/.test(this.value)){
+					this.nextElementSibling.textContent = "密码符合要求"
+					this.nextElementSibling.style.color = "green"
+					return
+				}
+				this.nextElementSibling.textContent = "密码太简单"
+				this.nextElementSibling.style.color = "red"
+			}
 			
 			// 函数节流：在一定时间内进行一次函数判断而不是每次都进行判断,减少过快的调用进行节流
-			var id
+			var r,o,id
 			function inputHandler(e){
+				if(this.id == "text"){
+					//分组
+					r = /^\d{4}(-\d{2}){2}$/g
+					// this.value=this.value.replace(/\D/g,"")
+				}else if(this.id == "mail"){
+					r = /^\w+?@\w+?\.com$|cn$|net$/
+					// this.value=this.value.replace(/\W/g,"")
+				}
+				o = this
 				if(id) return
 				id = setTimeout(function(){
 					clearTimeout(id)
 					id = 0
-					text.value=text.value.replace(/^\-\D/,"")
-					if(/\d\d\d\d-\d\d-\d\d/g.test(text.value)){
-						text.nextElementSibling.textContent = "输入正确"
-						text.nextElementSibling.style.color = "green"
+					// 使用花括号{}可以对正则内容进行重复 {0}表示空字符串 {n,m} 重复范围,先找出最大的,再从小到大开始找
+					// 这个属于贪婪匹配
+					// * = {0,} 没有或者重复若干次
+					// + = {1,} 不写则匹配任意长度,至少一次以上的重复
+					// ? = {0,1} 0次表示空字符串,1次表示有这个字符,没有或者有都可以
+					// 非贪婪匹配
+					// 任何范围重复,在重复的次数后增加问号?,就可以实现最小匹配次数
+					// /cat|dog/ 匹配
+					// 起头和结尾 ^ $ 表示正则表达式的起始和结束
+					
+					if(r.test(o.value)){
+						o.nextElementSibling.textContent = "输入正确"
+						o.nextElementSibling.style.color = "green"
 						return
 					}
-					text.nextElementSibling.textContent = "输入错误"
-					text.nextElementSibling.style.color = "red"
-				},1000)
+					o.nextElementSibling.textContent = "输入错误"
+					o.nextElementSibling.style.color = "red"
+				},500)
 			}
 		</script>
 	</body>
