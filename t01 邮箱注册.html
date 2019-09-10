@@ -5,7 +5,8 @@
 		<title></title>
 		<style>
 			body{
-				margin:10px 200px;
+				margin-top: 50px;
+				margin-left: 33%;
 			}
 			input{
 				width: 300px;
@@ -15,8 +16,11 @@
 				border-radius: 2px;
 				display: block;
 			}
+			h1{
+				margin-left: 120px;
+			}
 			select{
-				width: 90px;
+				width: 100px;
 				font-size: 16px;
 				border-radius: 2px;
 			}
@@ -45,7 +49,7 @@
 				display: inline-block;
 			}
 			#mailText{
-				width: 190px;
+				width: 180px;
 				display: inline-block;
 			}
 			#pwshow{
@@ -103,7 +107,7 @@
 		</style>
 	</head>
 	<body>
-		<h1>注册免费邮箱</h1>
+		<h1>注册免费兔子邮箱</h1>
 		<div id="leftmsg">
 			<div>
 				<span>*</span><span>邮件地址</span>
@@ -121,9 +125,9 @@
 		<form action="#" method="get" id="form">
 			<input type="text" id="mailText"><span>@</span>
 			<select value="163.com">
-				<option value ="163.com">163.com</option>
-				<option value ="126.com">126.com</option>
-				<option value ="yeah.net">yeah.net</option>
+				<option value ="tuzi.com">tuzi.com</option>
+				<option value ="usagi.com">usagi.com</option>
+				<option value ="tuzi.net">tuzi.net</option>
 			</select>
 			<div>6~18个字符，可使用字母、数字、下划线，需以字母开头</div>
 			<input type="text" id="password">
@@ -141,7 +145,7 @@
 			<div>请填写中国大陆的手机号码</div>
 			<input type="checkbox">
 			<div>
-				同意<a href="#">《网易邮箱帐号服务条款》</a> 和<a href="#">《网易隐私政策》</a>
+				同意<a href="#">《兔子邮箱帐号服务条款》</a>和<a href="#">《兔子隐私政策》</a>
 			</div>
 			<button type="submit">立即注册</button>
 		</form>
@@ -186,6 +190,9 @@
 				if(e.type=="input"){
 					switch(this.id){
 						case "mailText":
+							// 重置输入框颜色
+							this.style.borderColor = "gray"
+							this.style.backgroundColor = "white"
 							if(/\W/.test(this.value) || /[\$\(\)\*\+\.\[\]\?\\\^\{\}\|\!\=\/\-@#%&,<>]/.test(this.value)){
 								text.style.color = "red"
 								text.textContent = "邮件地址需由字母、数字或下划线组成"
@@ -211,9 +218,11 @@
 							}else{
 								this.revalue += this.value.slice(-1)
 							}
+							if(this.value.length==1 && this.value[0]!="●"){
+								this.revalue = this.value
+							}
 							this.revalue = this.revalue.slice(0,this.value.length)
 							this.value = this.value.replace(/./g,"●")
-							
 							// 重置密码框颜色
 							this.style.borderColor = "gray"
 							this.style.backgroundColor = "white"
@@ -244,6 +253,9 @@
 								this.revalue = this.value.slice(-1)	
 							}else{
 								this.revalue += this.value.slice(-1)
+							}
+							if(this.value.length==1 && this.value[0]!="●"){
+								this.revalue = this.value
 							}
 							this.revalue = this.revalue.slice(0,this.value.length)
 							this.value = this.value.replace(/./g,"●")
@@ -343,8 +355,25 @@
 									text.textContent = "手机号码应由11个数字组成"
 									return
 								}
-								
-								if(!/^1\d{10}$/.test(this.value)){
+								// 中国电信号段
+								if(/^133|^149|^153|^173|^177|^180|^181|^189|^191|^199|^193|^162\d{8}$/.test(this.value)){
+									this.isp = "中国电信"
+								// 中国联通	
+								}else if(/^130|^131|^132|^145|^155|^156|^166|^171|^175|^176|^185|^186|^165\d{8}$/.test(this.value)){
+									this.isp = "中国联通"
+								// 中国移动	
+								}else if(/^135|^136|^137|^138|^139|^147|^150|^151|^152|^157|^158|^159|^167|^171|^172|^178|^182|^183|^184|^187|^188|^198\d{8}$/.test(this.value)){
+									this.isp = "中国移动"
+								// 中国移动134号段
+								}else if(/^134[0-8]{8}$/.test(this.value)){
+									this.isp = "中国移动"
+								// 虚拟运营商	
+								}else if(/^1700|^1701|^1702|^1703|^1705|^1706|^1704|^1707|^1708|^1709\d{7}$/.test(this.value)){
+									this.isp = "虚拟运营商"
+								// 卫星通信	
+								}else if(/^1349\d{7}$/.test(this.value)){
+									this.isp = "卫星通信"
+								}else{
 									this.valuePass = false
 									text.style.color = "red"
 									text.textContent = "请输入正确的手机号码"
@@ -353,7 +382,7 @@
 								
 								this.valuePass = true
 								text.style.color = "green"
-								text.textContent = "手机号码输入正确"
+								text.textContent = "手机号码输入正确，您的运营商是"+this.isp
 						}
 					}
 				}
