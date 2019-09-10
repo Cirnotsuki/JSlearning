@@ -45,6 +45,9 @@
 				left: 5px;
 				top: 34px;
 				display: none;
+				opacity: 0;
+				transition: all 0.4s;
+				-o-transition:all 0.4s; /* Opera */
 			}
 			li{
 				display: block;
@@ -106,25 +109,52 @@
 						if (!this.bool){
 							this.bool = true
 							this.nextElementSibling.style.display = "block"
+							var o,id
+							o = this.nextElementSibling
+							id = setTimeout(function(){
+								o.style.opacity = "1"
+								clearTimeout(id)
+							},300)
 						}else if(this.bool){
 							this.bool = false
-							this.nextElementSibling.style.display = "none"
+							var o,id
+							o = this.nextElementSibling
+							id = setTimeout(function(){
+								o.style.opacity = "0"
+								o.style.display = "none"
+								clearTimeout(id)
+							},300)
 						}
 						break
 					case "UL":
 						if(e.target.tagName == "LI"){
 							button.firstElementChild.innerHTML = e.target.innerHTML
 							button.bool = false
-							this.style.display = "none"
+							var o,id
+							o = this
+							id = setTimeout(function(){
+								o.style.opacity = "0"
+								o.style.display = "none"
+								clearTimeout(id)
+							},300)
 						}
 						break
 					case "DIV":
 						button.bool = false
-						this.lastElementChild.style.display = "none"
+						var o,id
+						o = this.lastElementChild
+						id = setTimeout(function(){
+							o.style.opacity = "0"
+							o.style.display = "none"
+							clearTimeout(id)
+						},300)
 				}
 				
 			}
-			
+			function transition(obj){
+				obj.style.opacity = "1"
+				clearTimeout()
+			}
 		</script>
 	</body>
 </html>
