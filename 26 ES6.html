@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="JS/randomStyle.js"></script>
+	</head>
+	<body>
+		<div></div>
+		<script type="text/ecmascript">
+			"use strict" //严格模式
+			let a = 10
+			function al(){
+				// console.log(a)
+				let a = 1 // 在一个局部作用域中重新定义一个同名函数会使作用域外层同名函数失效
+				// let 只属于一个语句块
+				// let a = 2// 在同一个语句块中不允许定义相同的变量
+			}
+			
+			const EVENTID = 10 // const 定义的是常量,要用大写字母来写,一旦定义之后常量是不可以改变的
+			
+			// 箭头函数
+			let fn=a=>console.log(a)
+			let sum=(a,b)=>a+b
+			fn(1)
+			console.log(sum(1,2))
+			// 如果有多条语句,必须用花括号括起来,如果要用到return的话必须用到return语句
+			let fn2 = (a,b) => {a*=a;b*=b;return a*b}
+			
+			// 箭头函数中 this 的指向是源代码块的this指向,不受其他指向影响
+			// 侦听对象使用 e.currentTarget 侦听当前对象
+			
+			//用箭头函数写点击事件
+			let div = document.querySelector("div")
+			div.onclick=e=>{console.log(this)}
+			
+			let arr = [1,8,3,9,4,6]
+			arr.sort((a,b)=>a-b)
+			console.log(arr)
+			
+			// 解构赋值:多个变量赋值
+			// 数组解构赋值
+			let [f,g,h] = [3,4,5]
+			// 设置默认值
+			let [d=1,e] = [0]
+			// 函数参数中的解构赋值
+			function fn3([a,b]){
+				console.log(a+b)
+			}
+			fn3([3,5])
+			// 对象解构赋值
+			let {sum1,a1,b1}={a1:2,b1:4,sum1:function(){return a1+b1}}
+			console.log(a1,b1,sum1)
+			
+			// 复杂解构赋值
+			let obj = {
+				p:[
+					"hello",{y:"world"}
+				]
+			}
+			let {p:[a2,{y}]}=obj
+			console.log(a2,y)
+			
+			// 利用解构赋值取出JS方法
+			let {bgc,pos}=randomStyle
+			
+			// 字符串结构赋值
+			let [i1,i2,i3,i4] = "abcd"
+			// 字符串只有一个属性叫做length,所以只能针对length做解构赋值
+			let [{length:len1},{length:len2}] = ["aaa","bbbb"]
+			
+			//交换变量
+			// let s1 = 10
+			// let s2 = 20
+			// [s1,s2]=[s2,s1]
+			// 函数中返回多个值
+			function fn5(){
+				let a=10,b=20,c=30
+				// return [a,b,c]
+				return {a3:a,b3:b,c3:c}
+			}
+			// 数组接收
+			// let [l1,l2,l3] = fn5()
+			// 对象接收
+			let {a3,b3,c3} = fn5()
+			
+			// 查找字符串,是否包含 str.includes()
+			// 是否以某字符串开头 startWith
+			// 是否以某字符串结尾 endWith
+			// 让字符串重复多次 "abc".repeat(3)
+			// "abc".padStart(4,"0") 如果不足四位则在起始位置补个"0"
+			// "abc".padEnd(4,"0")后置补"0"
+			
+			// 字符模板
+			console.log(`a:${a3},b:${b3},c:${c3}`)
+			
+			// 标签模板
+			// alert 'aaa';
+			
+			// ...arg 为预设模板的参数集
+			// 可以直接在函数中设置默认内容
+			function fn6(a,b=0,...arg){
+				console.log(a,b,arg)
+			}
+			//
+		</script>
+	</body>
+</html>
