@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style> 
-div
-{
-	width:124px;
-	height:115px;
-	background-image: url(img/8.png);
-	opacity: 0;
-	transition:all 0.3s;
-	-moz-transition:-moz-all 0.3s; /* Firefox 4 */
-	-webkit-transition:all 0.3s; /* Safari and Chrome */
-	-o-transition:all 0.3s; /* Opera */
-}
+	<head>
+		<style> 
+		div
+		{
+			width:124px;
+			height:115px;
+			background-image: url(img/8.png);
+			opacity: 0;
+			transition:all 0.3s;
+			-moz-transition:-moz-all 0.3s; /* Firefox 4 */
+			-webkit-transition:all 0.3s; /* Safari and Chrome */
+			-o-transition:all 0.3s; /* Opera */
+		}
 
-div:hover
-{
-	opacity: 1;
-	height:230px;
-}
-</style>
-</head>
-<body>
+		div:hover
+		{
+			opacity: 1;
+			height:230px;
+		}
+		</style>
+	</head>
+	<body>
+		<div></div>
+		<p>输入您的年龄然后点击这个按钮：</p>
+		<input id="age" value="18" />
+		<button onclick="myFunction()">试一试</button>
+		<p id="demo"></p>
+		<script>
+			// 多元条件运算符
+			function myFunction() {
+			  var age, voteable;
+			  age = document.getElementById("age").value;
+			  voteable = (age < 18) ? "好年轻":"够成熟";
+			  document.getElementById("demo").innerHTML = voteable;
+			}
+			// input光标一直显示在尾端
+			function end (item) {
+				var obj = document.getElementsByClassName(item)[0]
+				obj.focus();
+				var len = obj.value.length;
 
-<div></div>
+				if (document.selection) {
+					var sel = obj.createTextRange();
 
-<p>输入您的年龄然后点击这个按钮：</p>
-
-<input id="age" value="18" />
-
-<button onclick="myFunction()">试一试</button>
-
-<p id="demo"></p>
-
-<script>
-// 多元条件运算符
-function myFunction() {
-  var age, voteable;
-  age = document.getElementById("age").value;
-  voteable = (age < 18) ? "好年轻":"够成熟";
-  document.getElementById("demo").innerHTML = voteable;
-}
-</script>
-
-</body>
+					sel.moveStart('character', len);
+					sel.collapse();
+					sel.select();
+				} else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+					obj.selectionStart = obj.selectionEnd = len;
+				}
+			}
+		</script>
+	</body>
 </html>
