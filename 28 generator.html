@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			"use strict"
+			function* abc(n){
+				yield n
+				let s=5
+				n+=2
+				yield n
+				n*=3
+				yield n
+				n=4
+				yield n
+				n+=s
+				yield n
+				return n
+			}
+			let s=abc(1)
+			// console.log(s.next())
+			// console.log(s.next())
+			// console.log(s.next())
+			// console.log(s.next())
+			// console.log(s.next())
+			// 每次yield为一个步骤,return为终结,return前需再yield一次
+			// 遍历方式
+			// let v=s.next()
+			// while (!v.done){
+			// 	console.log(v.value)
+			// 	v=s.next()
+			// }
+			function loadImage(src) {
+				return new Promise(function (res,rej) {
+					let img = new Image()
+					img.src = src
+					img.onload = function(){
+						res(img)
+					}
+				})
+			}
+			
+			function* getImages(list){
+				let arr=[]
+				let i=0
+				yield loadImage(list[i]).then(function(img){
+					arr.push(img)
+					i++
+					console.log(img)
+					if(i>list.length-1) return;
+				})
+			}
+			
+			let list = []
+			for(let i=1;i<7;i++){
+				list.push(`./img/${i}.jpg`)
+			}
+			let v = getImages(list)
+			while(!v.next().done){
+				v.next()
+			}
+			
+		</script>
+	</body>
+</html>

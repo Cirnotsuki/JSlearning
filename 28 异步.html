@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			"use strict"
+			// Promise
+			// 面试重点:
+			// 1 微任务和宏任务
+			// 2 和setTimeout 谁先执行
+			// 3 链式异步
+			// 4 Promise 和 async 使用起来有什么区别.async 实际上就是返回一个Promise
+			// 5 函数中可以使用 await 来调用另一个异步函数结果
+			function loadImage(src) {
+				return new Promise(function (res,rej) {
+					let img = new Image()
+					img.src = src
+					img.onload = function(){
+						res(img)
+					}
+					img.onerror = function(){
+						rej("加载失败")
+					}
+				})
+			}
+			// 链式异步:拿来打补丁的没啥用的东西
+			// loadImage("./img/1.jpg").then(function(data){
+			// 	console.log(data)
+			// 	return loadImage("./img/2.jpg")
+			// }).then(function(data){
+			// 	console.log(data)
+			// 	return loadImage("./img/3.jpg")
+			// }).then(function(data){
+			// 	console.log(data)
+			// 	return loadImage("./img/4.jpg")
+			// }).then(function(data){
+			// 	console.log(data)
+			// 	return loadImage("./img/5.jpg")
+			// }).then(function(data){
+			// 	console.log(data)
+			// 	return loadImage("./img/6.jpg")
+			// }).catch(function(error){
+			// 	console.log(error)
+			// })
+			
+			// Promise.all 执行多个异步数组,最后返回所有结果组成的列表数组
+			let arr = []
+			for(let i=1;i<7;i++){
+				arr.push(loadImage(`./img/${i}.jpg`))
+			}
+			// Promise.all(arr).then(function(arr){
+			// 	arr.forEach(t=>console.log(t.src))
+			// })
+			// Promise.race() 执行多个异步数组,谁先完成返回
+			Promise.race(arr).then(function(arr){
+				console.log(arr)
+			})
+			
+			// async:等同于 new Promise(function(re,rej){})
+			// await:异步等待
+			async function abc(){
+				let s = await a() // 同步
+				console.log("a")
+				return "a"
+			}
+			// 等同于
+			// function abc(){
+			// 	return new Promise(function(res,rej){
+			// 		res("a")
+			// 	})
+			// }
+			
+			async function a(){
+				return "ab"
+			}
+		</script>
+	</body>
+</html>
