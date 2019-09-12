@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			"use strict"
+			// 独一无二
+			let a = Symbol("a")
+			let b = Symbol("a")
+			
+			// 对象Symbol
+			let [a,b]=[Symbol(),Symbol()];
+			let obj = {
+				[a]:10,
+				[b]:20
+			};
+			// 消除魔术字符串
+			const EVENT_ID = Symbol()
+			
+			let arr = [1,4,5,2,4,5,1,6,8,9]
+			let a = new Set(arr)
+			arr = Array.from(new Set(arr))
+			arr.add(1) // 如果有重复的,不添加
+			arr.delete(4) // 没有下标,直接删除
+			console.log(arr.has(9))
+			console.log(a)
+			// set 没有下标,不能用for 循环遍历
+			// set 没有属性,for in 也不能遍历
+			for(let elem of arr){
+				console.log(elem)
+			}
+			// arr.size 获取类数组的长度
+			arr.forEach(t=>console.log(t))
+			
+			// Map : HashMap
+			// 区别,对象时没有长度的,hashmap是有长度的
+			let m =new Map();
+			m.set("a",2)
+			m.set("b",2)
+			console.log(m)
+			console.log(m.get("a")) // 获取对象
+			// size has clear
+			// 遍历方法
+			for(let elem of m){
+				console.log(elem) // [key,value]
+			}
+			for(let key of m.key()){
+				console.log(key)
+			}
+		</script>
+	</body>
+</html>
